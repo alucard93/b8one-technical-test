@@ -1,6 +1,10 @@
 import HeroBanner from '@/components/HeroBanner'
+import ProductGrid from '@/components/ProductGrid'
+import { getProductCards } from '@/lib/api'
 
-const Ofertas = () => {
+const Ofertas = async () => {
+  const products = await getProductCards()
+
   return (
     <main className="flex w-full flex-col gap-8">
       <HeroBanner />
@@ -15,6 +19,8 @@ const Ofertas = () => {
         >
           Ofertas da Semana
         </h1>
+
+        <ProductGrid products={products} />
       </section>
     </main>
   )

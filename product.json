@@ -2,7 +2,7 @@
   "products": [
     {
       "id": 1,
-      "title": "Fjallraven Backpack",
+      "title": "Fjallraven Everyday Backpack with Padded Laptop Sleeve and Water-Resistant Finish",
       "price": 109.95,
       "category": "men's clothing",
       "brand": "Fjallraven",
@@ -15,7 +15,7 @@
     },
     {
       "id": 2,
-      "title": "Slim Fit T-Shirt",
+      "title": "Slim Fit Cotton T-Shirt with Soft Touch Finish",
       "price": 22.3,
       "category": "men's clothing",
       "brand": "Nike",
@@ -28,7 +28,7 @@
     },
     {
       "id": 3,
-      "title": "Cotton Jacket",
+      "title": "Cotton Jacket with Adjustable Hood and Utility Pockets for Everyday Wear",
       "price": 55.99,
       "category": "men's clothing",
       "brand": "Adidas",
@@ -41,7 +41,7 @@
     },
     {
       "id": 4,
-      "title": "Casual Slim Fit",
+      "title": "Casual Slim Fit Everyday Crewneck Shirt",
       "price": 15.99,
       "category": "men's clothing",
       "brand": "Puma",
@@ -54,7 +54,7 @@
     },
     {
       "id": 5,
-      "title": "Gold Dragon Bracelet",
+      "title": "Gold Dragon Bracelet in Handcrafted Sterling Silver",
       "price": 695,
       "category": "jewelery",
       "brand": "John Hardy",
@@ -67,7 +67,7 @@
     },
     {
       "id": 6,
-      "title": "Micropave Ring",
+      "title": "Micropave Ring with Delicate Stone Detail",
       "price": 168,
       "category": "jewelery",
       "brand": "Pandora",
