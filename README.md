@@ -2,7 +2,7 @@
 
 Projeto desenvolvido com `Next.js`, `TypeScript` e `Tailwind CSS`.
 
-Os dados da vitrine são servidos internamente pelo próprio projeto a partir do arquivo [product.json](C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/product.json), via rota [route.ts](C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/src/app/api/products/route.ts).
+Os dados da vitrine são mockados localmente a partir do arquivo [product.json](C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/product.json) e expostos internamente pela rota [route.ts](C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/src/app/api/products/route.ts).
 
 ## Requisitos
 
