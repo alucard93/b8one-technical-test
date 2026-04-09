@@ -33,7 +33,7 @@ const CategoryFilter = ({
       aria-label="Filtrar produtos por categoria"
       className="flex flex-col gap-3"
     >
-      <p className="text-sm font-medium text-slate-700">Categorias</p>
+      <p className="text-base font-bold text-slate-700">Categorias</p>
 
       <ul className="flex flex-wrap gap-2">
         <li>

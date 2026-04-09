@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import bannerCategory from '../../public/banner-category.jpg'
+import bannerCategory from '../../public/banner-category.png'
 
 const HeroBanner = () => {
   return (

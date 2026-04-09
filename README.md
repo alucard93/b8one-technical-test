@@ -1,18 +1,24 @@
 # b8one Technical Test
 
-![alt text](image.png)
+![Preview da página de ofertas](image.png)
 
-Aplicacao desenvolvida com `Next.js`, `React`, `TypeScript` e `Tailwind CSS`.
+Aplicação desenvolvida com `Next.js`, `React`, `TypeScript` e `Tailwind CSS` para entregar uma vitrine de ofertas com filtros e paginação usando `App Router`.
 
-O projeto implementa a rota `/ofertas` com:
+## Visão Geral
 
-- banner estatico no topo
-- titulo `Ofertas da Semana`
+O projeto implementa a rota `/ofertas` com foco em uma estrutura simples, organizada e coerente com uma aplicação full-stack em `Next.js`.
+
+Principais entregas:
+
+- banner estático no topo
+- título `Ofertas da Semana`
+- vitrine de produtos em grid responsivo
 - filtro por categoria via query string
-- vitrine de produtos
-- paginacao de 6 itens por pagina
+- paginação de 6 itens por página
+- rota interna `GET /api/products`
+- tratamento para categoria inválida com mensagem visual
 
-Os dados sao mockados localmente em `src/db/product.json` e expostos por uma rota interna `GET /api/products`.
+Os dados são mockados localmente em `src/db/product.json`.
 
 ## Stack
 
@@ -26,33 +32,33 @@ Os dados sao mockados localmente em `src/db/product.json` e expostos por uma rot
 - `Node.js 20+`
 - `npm`
 
-## Instalacao
+## Como Executar
+
+### Instalação
 
 ```bash
 npm install
 ```
 
-## Como rodar em desenvolvimento
+### Desenvolvimento
 
 ```bash
 npm run dev
 ```
 
-Abra:
+Abra no navegador:
 
 - `http://localhost:3000`
 - `http://localhost:3000/ofertas`
 
-## Rotas importantes
+### Produção
 
-- `/ofertas`: pagina principal do desafio
-- `/api/products`: rota interna com os produtos paginados
-- `/api/products?page=2`: exemplo de segunda pagina
-- `/ofertas?category=electronics`: exemplo com filtro por categoria
-- `/ofertas?category=electronics&page=2`: exemplo combinando filtro e paginacao
-- `/ofertas?category=qualquer-coisa`: categoria invalida retorna lista vazia e mensagem visual
+```bash
+npm run build
+npm run start
+```
 
-## Scripts disponiveis
+## Scripts Disponíveis
 
 ```bash
 npm run dev
@@ -61,41 +67,74 @@ npm run build
 npm run start
 ```
 
-## Build de producao
+## Rotas e Exemplos
 
-```bash
-npm run build
-npm run start
+- `/ofertas`
+  Lista principal de produtos
+- `/ofertas?page=2`
+  Segunda página da listagem
+- `/ofertas?category=electronics`
+  Lista filtrada por categoria
+- `/ofertas?category=electronics&page=2`
+  Filtro e paginação combinados
+- `/ofertas?category=qualquer-coisa`
+  Categoria inválida retorna lista vazia e mensagem visual
+- `/api/products`
+  Endpoint interno com suporte a `page` e `category`
+
+## Arquitetura e Fluxo
+
+O projeto segue uma organização modular em camadas dentro do próprio `Next.js`:
+
+1. a página `/ofertas` lê `searchParams.page` e `searchParams.category`
+2. `parsePage` valida a página, e a rota interna usa `parseCategory` para interpretar a categoria
+3. `src/lib/api.ts` consome a rota interna `/api/products`
+4. `src/app/api/products/route.ts` lê o mock local, aplica filtro e paginação
+5. a UI renderiza com `CategoryFilter`, `ProductGrid`, `ProductCard` e `Pagination`
+
+## Estrutura do Projeto
+
+```txt
+src/
+  app/
+    api/products/route.ts
+    ofertas/page.tsx
+  components/
+    CategoryFilter.tsx
+    HeroBanner.tsx
+    Pagination.tsx
+    ProductCard.tsx
+    ProductGrid.tsx
+  db/
+    product.json
+  lib/
+    api.ts
+  types/
+    product.ts
+  utils/
+    createOffersHref.ts
+    parseCategory.ts
+    parsePage.ts
 ```
 
-## Estrutura resumida
+Arquivos principais:
 
-- `src/app/ofertas/page.tsx`: pagina da vitrine
-- `src/app/api/products/route.ts`: rota interna dos produtos
-- `src/components/HeroBanner.tsx`: banner principal
-- `src/components/CategoryFilter.tsx`: filtro de categorias
-- `src/components/ProductGrid.tsx`: grid da vitrine
-- `src/components/ProductCard.tsx`: card do produto
-- `src/components/Pagination.tsx`: controles de paginacao
-- `src/lib/api.ts`: camada de acesso aos dados
-- `src/utils/parseCategory.ts`: validacao compartilhada da categoria
-- `src/utils/parsePage.ts`: util compartilhado para validacao da pagina atual
-- `src/utils/createOffersHref.ts`: montagem compartilhada das URLs de filtro e paginacao
-- `src/db/product.json`: base mockada
-- `src/types/product.ts`: tipagens de dominio
+- `src/app/ofertas/page.tsx`
+  Página principal da vitrine
+- `src/app/api/products/route.ts`
+  Endpoint interno de produtos
+- `src/components/CategoryFilter.tsx`
+  Interface do filtro por categoria
+- `src/components/Pagination.tsx`
+  Navegação entre páginas
+- `src/lib/api.ts`
+  Camada de acesso aos dados
+- `src/utils/parseCategory.ts`
+  Validação de categoria
+- `src/utils/createOffersHref.ts`
+  Montagem compartilhada das URLs
 
-## Fluxo resumido
-
-1. A pagina `/ofertas` le `searchParams.page` e `searchParams.category`.
-2. `src/utils/parsePage.ts` valida a pagina, e `src/utils/parseCategory.ts` apoia a validacao da categoria na rota interna.
-3. `src/lib/api.ts` consome a rota interna `/api/products`.
-4. `src/app/api/products/route.ts` le `src/db/product.json`, distingue categoria valida, ausente ou invalida, aplica o filtro e depois a paginacao.
-5. A pagina recebe os produtos, as categorias disponiveis e o status do filtro atual.
-6. `CategoryFilter`, `ProductGrid`, `ProductCard` e `Pagination` renderizam a interface, incluindo a mensagem para categoria invalida.
-
-## Documentacao
-
-Os arquivos `.md` sao a referencia atual da documentacao.
+## Documentação Complementar
 
 - [objectives.md](/C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/docs/objectives.md)
 - [filter-guide.md](/C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/docs/filter-guide.md)
