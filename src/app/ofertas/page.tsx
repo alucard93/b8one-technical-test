@@ -1,3 +1,4 @@
+import CategoryFilter from '@/components/CategoryFilter'
 import HeroBanner from '@/components/HeroBanner'
 import Pagination from '@/components/Pagination'
 import ProductGrid from '@/components/ProductGrid'
@@ -6,6 +7,7 @@ import { parsePage } from '@/utils/parsePage'
 
 type OfertasPageProps = {
   searchParams?: Promise<{
+    category?: string
     page?: string
   }>
 }
@@ -13,8 +15,15 @@ type OfertasPageProps = {
 const Ofertas = async ({ searchParams }: OfertasPageProps) => {
   const resolvedSearchParams = await searchParams
   const requestedPage = parsePage(resolvedSearchParams?.page)
-  const { products, currentPage, totalPages } =
-    await getProductCards(requestedPage)
+  const requestedCategory = resolvedSearchParams?.category ?? null
+  const {
+    products,
+    currentPage,
+    totalPages,
+    availableCategories,
+    hasInvalidCategory,
+    selectedCategory,
+  } = await getProductCards(requestedPage, requestedCategory)
 
   return (
     <main className="flex w-full flex-col gap-8">
@@ -31,8 +40,25 @@ const Ofertas = async ({ searchParams }: OfertasPageProps) => {
           Ofertas da Semana
         </h1>
 
-        <ProductGrid products={products} />
-        <Pagination currentPage={currentPage} totalPages={totalPages} />
+        <CategoryFilter
+          categories={availableCategories}
+          hasInvalidCategory={hasInvalidCategory}
+          selectedCategory={selectedCategory}
+        />
+        {products.length > 0 ? (
+          <ProductGrid products={products} />
+        ) : (
+          <p className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm text-slate-600">
+            {hasInvalidCategory
+              ? 'A categoria informada nao existe no cadastro.'
+              : 'Nenhum produto encontrado para a categoria selecionada.'}
+          </p>
+        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          selectedCategory={selectedCategory}
+        />
       </section>
     </main>
   )

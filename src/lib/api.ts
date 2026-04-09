@@ -26,14 +26,24 @@ function getBaseUrl() {
   return `http://localhost:${process.env.PORT ?? '3000'}`
 }
 
-export async function getProductCards(page = 1): Promise<ProductCardsResult> {
-  const searchParams = new URLSearchParams({
-    page: String(page),
-  })
+export async function getProductCards(
+  page = 1,
+  category?: string | null,
+): Promise<ProductCardsResult> {
+  const searchParams = new URLSearchParams()
 
-  const response = await fetch(`${getBaseUrl()}/api/products?${searchParams.toString()}`, {
-    cache: 'no-store',
-  })
+  searchParams.set('page', String(page))
+
+  if (category) {
+    searchParams.set('category', category)
+  }
+
+  const response = await fetch(
+    `${getBaseUrl()}/api/products?${searchParams.toString()}`,
+    {
+      cache: 'no-store',
+    },
+  )
 
   if (!response.ok) {
     throw new Error('Erro ao buscar produtos')
@@ -45,5 +55,8 @@ export async function getProductCards(page = 1): Promise<ProductCardsResult> {
     products: result.data.map(toProductCardData),
     currentPage: result.currentPage,
     totalPages: result.totalPages,
+    availableCategories: result.availableCategories,
+    hasInvalidCategory: result.hasInvalidCategory,
+    selectedCategory: result.selectedCategory,
   }
 }
