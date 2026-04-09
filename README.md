@@ -1,24 +1,24 @@
 # b8one Technical Test
 
-![Preview da pagina de ofertas](image.png)
+![Preview da página de ofertas](image.png)
 
-Aplicacao desenvolvida com `Next.js`, `React`, `TypeScript` e `Tailwind CSS` para entregar uma vitrine de ofertas com filtros e paginacao usando `App Router`.
+Aplicação desenvolvida com `Next.js`, `React`, `TypeScript` e `Tailwind CSS` para entregar uma vitrine de ofertas com filtros e paginação usando `App Router`.
 
-## Visao Geral
+## Visão Geral
 
-O projeto implementa a rota `/ofertas` com foco em uma estrutura simples, organizada e coerente com uma aplicacao full-stack em `Next.js`.
+O projeto implementa a rota `/ofertas` com foco em uma estrutura simples, organizada e coerente com uma aplicação full-stack em `Next.js`.
 
 Principais entregas:
 
-- banner estatico no topo
-- titulo `Ofertas da Semana`
+- banner estático no topo
+- título `Ofertas da Semana`
 - vitrine de produtos em grid responsivo
 - filtro por categoria via query string
-- paginacao de 6 itens por pagina
+- paginação de 6 itens por página
 - rota interna `GET /api/products`
-- tratamento para categoria invalida com mensagem visual
+- tratamento para categoria inválida com mensagem visual
 
-Os dados sao mockados localmente em `src/db/product.json`.
+Os dados são mockados localmente em `src/db/product.json`.
 
 ## Stack
 
@@ -34,7 +34,7 @@ Os dados sao mockados localmente em `src/db/product.json`.
 
 ## Como Executar
 
-### Instalacao
+### Instalação
 
 ```bash
 npm install
@@ -51,14 +51,14 @@ Abra no navegador:
 - `http://localhost:3000`
 - `http://localhost:3000/ofertas`
 
-### Producao
+### Produção
 
 ```bash
 npm run build
 npm run start
 ```
 
-## Scripts Disponiveis
+## Scripts Disponíveis
 
 ```bash
 npm run dev
@@ -72,24 +72,24 @@ npm run start
 - `/ofertas`
   Lista principal de produtos
 - `/ofertas?page=2`
-  Segunda pagina da listagem
+  Segunda página da listagem
 - `/ofertas?category=electronics`
   Lista filtrada por categoria
 - `/ofertas?category=electronics&page=2`
-  Filtro e paginacao combinados
+  Filtro e paginação combinados
 - `/ofertas?category=qualquer-coisa`
-  Categoria invalida retorna lista vazia e mensagem visual
+  Categoria inválida retorna lista vazia e mensagem visual
 - `/api/products`
   Endpoint interno com suporte a `page` e `category`
 
 ## Arquitetura e Fluxo
 
-O projeto segue uma organizacao modular em camadas dentro do proprio `Next.js`:
+O projeto segue uma organização modular em camadas dentro do próprio `Next.js`:
 
-1. a pagina `/ofertas` le `searchParams.page` e `searchParams.category`
-2. `parsePage` valida a pagina, e a rota interna usa `parseCategory` para interpretar a categoria
+1. a página `/ofertas` lê `searchParams.page` e `searchParams.category`
+2. `parsePage` valida a página, e a rota interna usa `parseCategory` para interpretar a categoria
 3. `src/lib/api.ts` consome a rota interna `/api/products`
-4. `src/app/api/products/route.ts` le o mock local, aplica filtro e paginacao
+4. `src/app/api/products/route.ts` lê o mock local, aplica filtro e paginação
 5. a UI renderiza com `CategoryFilter`, `ProductGrid`, `ProductCard` e `Pagination`
 
 ## Estrutura do Projeto
@@ -120,21 +120,21 @@ src/
 Arquivos principais:
 
 - `src/app/ofertas/page.tsx`
-  Pagina principal da vitrine
+  Página principal da vitrine
 - `src/app/api/products/route.ts`
   Endpoint interno de produtos
 - `src/components/CategoryFilter.tsx`
   Interface do filtro por categoria
 - `src/components/Pagination.tsx`
-  Navegacao entre paginas
+  Navegação entre páginas
 - `src/lib/api.ts`
   Camada de acesso aos dados
 - `src/utils/parseCategory.ts`
-  Validacao de categoria
+  Validação de categoria
 - `src/utils/createOffersHref.ts`
   Montagem compartilhada das URLs
 
-## Documentacao Complementar
+## Documentação Complementar
 
 - [objectives.md](/C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/docs/objectives.md)
 - [filter-guide.md](/C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/docs/filter-guide.md)
