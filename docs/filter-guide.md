@@ -12,6 +12,7 @@ Exemplos:
 - `/ofertas?category=electronics`
 - `/ofertas?category=jewelery`
 - `/ofertas?category=electronics&page=2`
+- `/ofertas?category=qualquer-coisa`
 
 ## Arquivos envolvidos
 
@@ -61,6 +62,8 @@ A funcao:
 - retorna `null` quando o valor nao pertence ao dominio
 - retorna uma `ProductCategory` valida quando a categoria existe
 
+Esse retorno isolado nao diferencia "sem filtro" de "filtro invalido". Essa distincao acontece na rota, comparando o valor bruto da query string com o resultado de `parseCategory`.
+
 As categorias aceitas ficam centralizadas em `src/types/product.ts`:
 
 - `electronics`
@@ -74,10 +77,9 @@ Em `src/app/ofertas/page.tsx`, a pagina:
 
 - recebe `searchParams`
 - le `category`
-- valida com `parseCategory`
 - chama `getProductCards(requestedPage, requestedCategory)`
 
-Assim, a pagina nao decide como filtrar. Ela apenas interpreta a URL e delega a busca.
+Assim, a pagina nao decide como filtrar. Ela apenas encaminha o valor recebido e delega a interpretacao final para a API.
 
 ## 4. Aplicacao do filtro na API interna
 
@@ -85,17 +87,31 @@ Em `src/app/api/products/route.ts`, a rota:
 
 - le os produtos de `src/db/product.json`
 - valida `category`
+- detecta quando a categoria informada e invalida
 - filtra os produtos antes da paginacao
 
-O ponto principal e este:
+O ponto principal agora e este:
 
 ```ts
-const filteredProducts = selectedCategory
-  ? products.filter((product) => product.category === selectedCategory)
-  : products
+const hasInvalidCategory =
+  requestedCategory !== null &&
+  requestedCategory !== '' &&
+  selectedCategory === null
+
+const filteredProducts = hasInvalidCategory
+  ? []
+  : selectedCategory
+    ? products.filter((product) => product.category === selectedCategory)
+    : products
 ```
 
-Essa ordem e importante porque `totalItems` e `totalPages` precisam refletir o conjunto ja filtrado.
+Com isso:
+
+- sem `category`: lista completa
+- `category` valida: lista filtrada
+- `category` invalida: lista vazia
+
+Essa ordem e importante porque `totalItems` e `totalPages` precisam refletir o conjunto final que sera exibido.
 
 ## 5. Componente de interface
 
@@ -104,10 +120,12 @@ Essa ordem e importante porque `totalItems` e `totalPages` precisam refletir o c
 Ele:
 
 - recebe `categories`
+- recebe `hasInvalidCategory`
 - recebe `selectedCategory`
 - renderiza a opcao `Todas`
 - renderiza um link para cada categoria
 - destaca a categoria ativa
+- evita marcar `Todas` como ativa quando a query string contem uma categoria invalida
 
 O componente nao aplica a regra do filtro. Ele apenas monta links para a URL correta.
 
@@ -131,12 +149,16 @@ Exemplo:
 A rota `/api/products` devolve, alem dos produtos:
 
 - `availableCategories`
+- `hasInvalidCategory`
 - `selectedCategory`
 
 Esses campos permitem que a UI saiba:
 
 - quais categorias podem ser exibidas no filtro
+- se a categoria informada na URL e invalida
 - qual categoria esta atualmente ativa
+
+Quando `hasInvalidCategory` e `true`, a interface mostra a mensagem `A categoria informada nao existe no cadastro.`.
 
 ## Por que essa abordagem
 
@@ -151,7 +173,7 @@ Essa implementacao foi escolhida porque:
 
 Uma resposta curta:
 
-`O filtro por categoria usa query string, entao a URL representa o estado atual da listagem. A pagina /ofertas le category, valida com parseCategory e chama a camada de acesso em src/lib/api.ts. A rota interna /api/products aplica o filtro no banco mockado, recalcula totalItems e totalPages e devolve selectedCategory junto com os produtos. O componente CategoryFilter so renderiza os links com base nesses dados.`
+`O filtro por categoria usa query string, entao a URL representa o estado atual da listagem. A pagina /ofertas encaminha category para src/lib/api.ts, e a rota interna /api/products decide se ela e valida, ausente ou invalida. Quando a categoria existe, a rota filtra os produtos; quando e invalida, devolve lista vazia com um sinalizador para a UI. O componente CategoryFilter so renderiza os links com base nesses dados.`
 
 ## Possiveis evolucoes
 

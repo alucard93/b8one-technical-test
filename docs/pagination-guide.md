@@ -14,6 +14,7 @@ Exemplos:
 - `/ofertas?page=2`
 - `/ofertas?category=electronics`
 - `/ofertas?category=electronics&page=2`
+- `/ofertas?category=qualquer-coisa`
 
 ## Arquivos envolvidos
 
@@ -48,7 +49,7 @@ Em `src/app/ofertas/page.tsx`, a pagina recebe `searchParams` com:
 
 `page` passa por `src/utils/parsePage.ts`, que garante um inteiro maior ou igual a `1`.
 
-`category` passa por `src/utils/parseCategory.ts`, que aceita apenas categorias validas do dominio.
+`category` e encaminhada para a rota interna, onde `src/utils/parseCategory.ts` aceita apenas categorias validas do dominio.
 
 ## 2. Consumo da rota interna
 
@@ -76,6 +77,7 @@ O retorno final para a pagina e:
   currentPage,
   totalPages,
   availableCategories,
+  hasInvalidCategory,
   selectedCategory
 }
 ```
@@ -88,6 +90,7 @@ Em `src/app/api/products/route.ts`, a rota:
 - reutiliza `parsePage`
 - reutiliza `parseCategory`
 - define `PRODUCTS_PER_PAGE = 6`
+- detecta quando a categoria informada e invalida
 - filtra os produtos por categoria
 - calcula `totalItems`
 - calcula `totalPages`
@@ -97,11 +100,12 @@ Em `src/app/api/products/route.ts`, a rota:
 A ordem da regra e importante:
 
 1. validar categoria
-2. filtrar os produtos
-3. calcular total de paginas
-4. aplicar a paginacao
+2. detectar categoria invalida
+3. filtrar os produtos
+4. calcular total de paginas
+5. aplicar a paginacao
 
-Isso evita `totalPages` incorreto quando um filtro reduz a quantidade de itens.
+Isso evita `totalPages` incorreto quando um filtro reduz a quantidade de itens e impede que categorias inexistentes caiam no fallback de lista completa.
 
 ## 4. Resposta da API
 
@@ -110,10 +114,11 @@ A rota retorna este formato:
 ```json
 {
   "currentPage": 1,
-  "totalPages": 2,
-  "totalItems": 6,
+  "totalPages": 1,
+  "totalItems": 0,
   "availableCategories": [],
-  "selectedCategory": "electronics",
+  "hasInvalidCategory": true,
+  "selectedCategory": null,
   "data": []
 }
 ```
@@ -124,6 +129,7 @@ Campos:
 - `totalPages`: total de paginas disponiveis para o recorte atual
 - `totalItems`: total de produtos apos aplicar o filtro
 - `availableCategories`: categorias disponiveis para a interface
+- `hasInvalidCategory`: indica se a categoria informada na URL nao existe
 - `selectedCategory`: categoria ativa
 - `data`: produtos da pagina atual
 
@@ -132,6 +138,7 @@ Campos:
 `src/components/CategoryFilter.tsx` recebe:
 
 - `categories`
+- `hasInvalidCategory`
 - `selectedCategory`
 
 O componente:
@@ -139,6 +146,7 @@ O componente:
 - renderiza a opcao `Todas`
 - renderiza uma opcao por categoria
 - reseta a pagina ao trocar de categoria
+- nao marca nenhuma categoria como ativa quando a query string e invalida
 
 `src/components/Pagination.tsx` recebe:
 
@@ -168,7 +176,7 @@ Essa implementacao foi escolhida porque:
 
 Uma resposta curta:
 
-`A listagem usa query string para pagina e categoria, entao a URL representa o estado atual. A pagina /ofertas le esses parametros, chama src/lib/api.ts e consome a rota interna /api/products. Essa rota le o banco mockado em src/db/product.json, aplica o filtro por categoria, calcula a paginacao de 6 em 6 e devolve currentPage, totalPages, availableCategories e data. Os componentes CategoryFilter e Pagination so renderizam os links com base nesses metadados.`
+`A listagem usa query string para pagina e categoria, entao a URL representa o estado atual. A pagina /ofertas le esses parametros, chama src/lib/api.ts e consome a rota interna /api/products. Essa rota le o banco mockado em src/db/product.json, detecta categoria invalida, aplica o filtro por categoria quando necessario, calcula a paginacao de 6 em 6 e devolve currentPage, totalPages, availableCategories, hasInvalidCategory e data. Os componentes CategoryFilter e Pagination so renderizam os links com base nesses metadados.`
 
 ## Possiveis evolucoes
 

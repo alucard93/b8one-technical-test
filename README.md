@@ -50,6 +50,7 @@ Abra:
 - `/api/products?page=2`: exemplo de segunda pagina
 - `/ofertas?category=electronics`: exemplo com filtro por categoria
 - `/ofertas?category=electronics&page=2`: exemplo combinando filtro e paginacao
+- `/ofertas?category=qualquer-coisa`: categoria invalida retorna lista vazia e mensagem visual
 
 ## Scripts disponiveis
 
@@ -86,11 +87,11 @@ npm run start
 ## Fluxo resumido
 
 1. A pagina `/ofertas` le `searchParams.page` e `searchParams.category`.
-2. `src/utils/parsePage.ts` e `src/utils/parseCategory.ts` validam os parametros.
+2. `src/utils/parsePage.ts` valida a pagina, e `src/utils/parseCategory.ts` apoia a validacao da categoria na rota interna.
 3. `src/lib/api.ts` consome a rota interna `/api/products`.
-4. `src/app/api/products/route.ts` le `src/db/product.json`, aplica o filtro por categoria e depois a paginacao.
-5. A pagina recebe os produtos e as categorias disponiveis.
-6. `CategoryFilter`, `ProductGrid`, `ProductCard` e `Pagination` renderizam a interface.
+4. `src/app/api/products/route.ts` le `src/db/product.json`, distingue categoria valida, ausente ou invalida, aplica o filtro e depois a paginacao.
+5. A pagina recebe os produtos, as categorias disponiveis e o status do filtro atual.
+6. `CategoryFilter`, `ProductGrid`, `ProductCard` e `Pagination` renderizam a interface, incluindo a mensagem para categoria invalida.
 
 ## Documentacao
 
