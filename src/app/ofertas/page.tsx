@@ -1,9 +1,20 @@
 import HeroBanner from '@/components/HeroBanner'
+import Pagination from '@/components/Pagination'
 import ProductGrid from '@/components/ProductGrid'
 import { getProductCards } from '@/lib/api'
+import { parsePage } from '@/utils/parsePage'
 
-const Ofertas = async () => {
-  const products = await getProductCards()
+type OfertasPageProps = {
+  searchParams?: Promise<{
+    page?: string
+  }>
+}
+
+const Ofertas = async ({ searchParams }: OfertasPageProps) => {
+  const resolvedSearchParams = await searchParams
+  const requestedPage = parsePage(resolvedSearchParams?.page)
+  const { products, currentPage, totalPages } =
+    await getProductCards(requestedPage)
 
   return (
     <main className="flex w-full flex-col gap-8">
@@ -21,6 +32,7 @@ const Ofertas = async () => {
         </h1>
 
         <ProductGrid products={products} />
+        <Pagination currentPage={currentPage} totalPages={totalPages} />
       </section>
     </main>
   )
