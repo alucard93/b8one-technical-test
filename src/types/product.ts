@@ -38,3 +38,16 @@ export type ProductsDb = {
   products: Product[]
   filters: ProductFilters
 }
+
+export type PaginatedProductsResponse = {
+  currentPage: number
+  totalPages: number
+  totalItems: number
+  data: Product[]
+}
+
+export type ProductCardsResult = {
+  products: ProductCardData[]
+  currentPage: number
+  totalPages: number
+}
