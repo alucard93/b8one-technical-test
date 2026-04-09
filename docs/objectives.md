@@ -5,18 +5,18 @@
 - [x] Criar projeto com Next.js
 - [x] Configurar Tailwind CSS
 - [x] Configurar TypeScript
-- [ ] Ajustar `metadata` da aplicação
-- [ ] Remover o conteúdo padrão do template inicial
+- [x] Ajustar `metadata` da aplicação
+- [x] Remover o conteúdo padrão do template inicial
 
 ## Rota principal
 
-- [ ] Criar a rota `/ofertas`
+- [x] Criar a rota `/ofertas`
 - [ ] Garantir que a página abre sem erro
-- [ ] Definir estrutura principal da página
+- [x] Definir estrutura principal da página
 
 ## Layout da página
 
-- [ ] Adicionar banner estático no topo
+- [x] Adicionar banner estático no topo
 - [ ] Adicionar o título `Ofertas da Semana`
 - [ ] Criar a seção da vitrine de produtos
 - [ ] Organizar os produtos em grid responsivo
