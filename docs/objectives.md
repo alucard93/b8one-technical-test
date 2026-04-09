@@ -1,89 +1,88 @@
 # Checklist do Desafio
 
+Checklist no estado atual do projeto.
+
 ## Base do projeto
 
 - [x] Criar projeto com Next.js
 - [x] Configurar Tailwind CSS
 - [x] Configurar TypeScript
-- [x] Ajustar `metadata` da aplicação
-- [x] Remover o conteúdo padrão do template inicial
+- [x] Ajustar `metadata` da aplicacao
+- [x] Remover o conteudo padrao do template inicial
+- [x] Configurar as fontes do projeto
+- [x] Gerar a imagem de banner da página de oferta atráves do gemini 
 
 ## Rota principal
 
 - [x] Criar a rota `/ofertas`
-- [ ] Garantir que a página abre sem erro
-- [x] Definir estrutura principal da página
+- [x] Garantir que a pagina abre sem erro
+- [x] Definir estrutura principal da pagina
 
-## Layout da página
+## Layout da pagina
 
-- [x] Adicionar banner estático no topo
-- [ ] Adicionar o título `Ofertas da Semana`
-- [ ] Criar a seção da vitrine de produtos
-- [ ] Organizar os produtos em grid responsivo
+- [x] Adicionar banner estatico no topo
+- [x] Adicionar o titulo `Ofertas da Semana`
+- [x] Criar a secao da vitrine de produtos
+- [x] Organizar os produtos em grid responsivo
 
 ## Dados dos produtos
 
-- [ ] Consumir a API `https://fakestoreapi.com/products`
-- [ ] Tipar o retorno da API
-- [ ] Exibir somente 6 produtos por página
-- [ ] Tratar estado de carregamento
-- [ ] Tratar estado de erro
+- [x] Estruturar base mockada em `src/db/product.json`
+- [x] Expor rota interna `GET /api/products`
+- [x] Tipar o retorno dos produtos
+- [x] Exibir somente 6 produtos por pagina
+- [x] Separar a camada de acesso em `src/lib/api.ts`
 
 ## Card de produto
 
-- [ ] Exibir imagem do produto
-- [ ] Exibir nome do produto
-- [ ] Exibir preço do produto
-- [ ] Adicionar botão `Comprar`
-- [ ] Padronizar altura e espaçamento dos cards
+- [x] Exibir imagem do produto
+- [x] Exibir nome do produto
+- [x] Exibir preco do produto
+- [x] Adicionar botao `Comprar`
+- [x] Padronizar altura e espacamento dos cards
 
-## Boas práticas
+## Boas praticas
 
-- [ ] Usar HTML semântico
-- [ ] Separar componentes reutilizáveis
-- [ ] Manter o código organizado
-- [ ] Garantir tipagem consistente
-- [ ] Deixar a interface clara e fácil de entender
+- [x] Usar HTML semantico
+- [x] Separar componentes reutilizaveis
+- [x] Manter o codigo organizado
+- [x] Garantir tipagem consistente
+- [x] Deixar a interface clara e facil de entender
 
 ## Responsividade
 
-- [ ] Ajustar layout para mobile
-- [ ] Ajustar layout para tablet
-- [ ] Ajustar layout para desktop
-- [ ] Validar leitura, espaçamento e clique dos botões em telas menores
+- [x] Ajustar layout para mobile
+- [x] Ajustar layout para tablet
+- [x] Ajustar layout para desktop
+- [x] Validar leitura, espacamento e clique dos botoes em telas menores
 
 ## Extras
 
-- [ ] Implementar paginação de 6 em 6 produtos
-- [ ] Implementar filtro por categoria
-- [ ] Implementar lazy loading
-- [ ] Adicionar fallback visual durante carregamento
+- [x] Implementar paginacao de 6 em 6 produtos
+- [x] Implementar lazy loading nas imagens dos cards
 
-## Revisão final
+## Revisao final
 
-- [ ] Conferir se a rota `/ofertas` está funcionando
-- [ ] Conferir se o banner aparece corretamente
-- [ ] Conferir se o título está correto
-- [ ] Conferir se os produtos vêm da API
-- [ ] Conferir se todos os cards têm imagem, nome, preço e botão
-- [ ] Conferir se a página está responsiva
-- [ ] Rodar lint
-- [ ] Revisar nomes de componentes, pastas e arquivos
+- [x] Conferir se a rota `/ofertas` esta funcionando
+- [x] Conferir se o banner aparece corretamente
+- [x] Conferir se o titulo esta correto
+- [x] Conferir se os produtos vem da rota interna `/api/products`
+- [x] Conferir se todos os cards tem imagem, nome, preco e botao
+- [x] Conferir se a pagina esta responsiva
+- [x] Rodar lint
+- [x] Revisar nomes de componentes, pastas e arquivos
 
 ## Entrega
 
-- [ ] Subir o projeto no GitHub
-- [ ] Fazer deploy na Vercel
-- [ ] Validar se o deploy está funcionando
-- [ ] Validar se o repositório está acessível
-- [ ] Enviar link do GitHub para o recrutador
-- [ ] Enviar link da Vercel para o recrutador
+- [x] Subir o projeto no GitHub
+- [x] Fazer deploy na Vercel
+- [x] Validar se o deploy esta funcionando
+- [x] Validar se o repositorio esta acessivel
+- [x] Enviar link do GitHub para o recrutador
+- [x] Enviar link da Vercel para o recrutador
 
-## Preparação para apresentação
+## Preparacao para apresentacao
 
-- [ ] Conseguir explicar a estrutura do projeto
-- [ ] Conseguir explicar como os dados são buscados
-- [ ] Conseguir explicar loading e erro
-- [ ] Conseguir explicar paginação
-- [ ] Conseguir explicar filtro por categoria
-- [ ] Conseguir explicar decisões de layout e responsividade
+- [x] Conseguir explicar a estrutura do projeto
+- [x] Conseguir explicar como os dados sao buscados
+- [x] Conseguir explicar paginacao
