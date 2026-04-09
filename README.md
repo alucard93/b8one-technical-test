@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# b8one Technical Test
 
-## Getting Started
+Projeto desenvolvido com `Next.js`, `TypeScript`, `Tailwind CSS` e `json-server` para simular a API local de produtos.
 
-First, run the development server:
+## Requisitos
+
+- `Node.js`
+- `npm`
+
+## Instalação
+
+```bash
+npm install
+```
+
+## Como rodar o projeto
+
+Para subir o frontend e a API fake ao mesmo tempo:
+
+```bash
+npm run start:all
+```
+
+O projeto ficará disponível em:
+
+- Frontend: `http://localhost:3000`
+- API fake: `http://localhost:4000/products`
+
+## Rodando separadamente
+
+Frontend:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+API fake:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run api
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts disponíveis
 
-## Learn More
+```bash
+npm run dev
+npm run api
+npm run start:all
+npm run lint
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Rota principal
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+A página do desafio está em:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+http://localhost:3000/ofertas
+```
 
-## Deploy on Vercel
+## Problema comum: porta 4000 em uso
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Se ao rodar `npm run start:all` aparecer erro de porta ocupada, significa que já existe outro processo usando a porta `4000`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Como resolver
+
+#### 1. Matar o processo na porta 4000
+
+No Windows (PowerShell):
+
+```powershell
+netstat -ano | findstr :4000
+```
+
+Vai aparecer algo assim:
+
+```text
+TCP    0.0.0.0:4000   ...   LISTENING   1234
+```
+
+O número final (`1234`) é o `PID`.
+
+Agora finalize o processo:
+
+```powershell
+taskkill /PID 1234 /F
+```
+
+#### 2. Descobrir o processo pelo PowerShell
+
+```powershell
+Get-NetTCPConnection -LocalPort 4000 | Select-Object LocalPort, OwningProcess, State
+```
+
+Depois:
+
+```powershell
+Get-Process -Id <PID>
+```
+
+E, se necessário:
+
+```powershell
+Stop-Process -Id <PID>
+```
+
+#### 3. Trocar a porta da API
+
+Se preferir, altere o script `api` no arquivo [package.json](C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/package.json) para outra porta, por exemplo:
+
+```json
+"api": "json-server --watch product.json --port 4001"
+```
+
+Depois ajuste também a URL usada pela aplicação em [src/lib/api.ts](C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/src/lib/api.ts).
