@@ -1,15 +1,19 @@
 import Link from 'next/link'
 
+import type { ProductCategory } from '@/types/product'
+import { createOffersHref } from '@/utils/createOffersHref'
+
 type PaginationProps = {
   currentPage: number
   totalPages: number
+  selectedCategory: ProductCategory | null
 }
 
-function createPageHref(page: number) {
-  return page === 1 ? '/ofertas' : `/ofertas?page=${page}`
-}
-
-const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
+const Pagination = ({
+  currentPage,
+  totalPages,
+  selectedCategory,
+}: PaginationProps) => {
   if (totalPages <= 1) {
     return null
   }
@@ -22,7 +26,10 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
         <li>
           {currentPage > 1 ? (
             <Link
-              href={createPageHref(currentPage - 1)}
+              href={createOffersHref({
+                page: currentPage - 1,
+                category: selectedCategory,
+              })}
               aria-label="Pagina anterior"
               className="inline-flex h-8 items-center justify-center rounded-lg border border-slate-200 px-2.5 text-[11px] font-medium text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50"
             >
@@ -41,7 +48,10 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
         {pages.map((page) => (
           <li key={page}>
             <Link
-              href={createPageHref(page)}
+              href={createOffersHref({
+                page,
+                category: selectedCategory,
+              })}
               aria-current={page === currentPage ? 'page' : undefined}
               className={`inline-flex size-8 items-center justify-center rounded-lg border text-[11px] font-semibold transition-colors ${
                 page === currentPage
@@ -57,7 +67,10 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
         <li>
           {currentPage < totalPages ? (
             <Link
-              href={createPageHref(currentPage + 1)}
+              href={createOffersHref({
+                page: currentPage + 1,
+                category: selectedCategory,
+              })}
               aria-label="Proxima pagina"
               className="inline-flex h-8 items-center justify-center rounded-lg border border-slate-200 px-2.5 text-[11px] font-medium text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50"
             >
