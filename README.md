@@ -73,16 +73,18 @@ npm run start
 - `src/components/ProductCard.tsx`: card do produto
 - `src/components/Pagination.tsx`: controles de paginacao
 - `src/lib/api.ts`: camada de acesso aos dados
+- `src/utils/parsePage.ts`: util compartilhado para validacao da pagina atual
 - `src/db/product.json`: base mockada
 - `src/types/product.ts`: tipagens de dominio
 
 ## Fluxo resumido
 
 1. A pagina `/ofertas` le `searchParams.page`.
-2. `src/lib/api.ts` consome a rota interna `/api/products`.
-3. `src/app/api/products/route.ts` le `src/db/product.json` e aplica a paginacao.
-4. A pagina recebe os produtos prontos para a UI.
-5. `ProductGrid`, `ProductCard` e `Pagination` renderizam a interface.
+2. `src/utils/parsePage.ts` valida o numero da pagina.
+3. `src/lib/api.ts` consome a rota interna `/api/products`.
+4. `src/app/api/products/route.ts` le `src/db/product.json`, reaproveita `parsePage` e aplica a paginacao.
+5. A pagina recebe os produtos prontos para a UI.
+6. `ProductGrid`, `ProductCard` e `Pagination` renderizam a interface.
 
 ## Documentacao
 

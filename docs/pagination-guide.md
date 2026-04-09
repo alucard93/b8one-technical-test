@@ -19,28 +19,32 @@ Exemplos:
 - `src/app/api/products/route.ts`
 - `src/components/Pagination.tsx`
 - `src/types/product.ts`
+- `src/utils/parsePage.ts`
 - `src/db/product.json`
 
 ## Visao geral
 
-A paginacao foi dividida em quatro partes:
+A paginacao foi dividida em cinco partes:
 
 1. a pagina le a query string
-2. a camada `api.ts` consome a rota interna
-3. a rota interna calcula a pagina atual e devolve os itens corretos
-4. o componente `Pagination` renderiza os links
+2. `src/utils/parsePage.ts` valida o parametro
+3. a camada `api.ts` consome a rota interna
+4. a rota interna calcula a pagina atual e devolve os itens corretos
+5. o componente `Pagination` renderiza os links
 
 ## 1. Leitura da pagina atual
 
 Em `src/app/ofertas/page.tsx`, a pagina recebe `searchParams`.
 
-O valor de `page` passa pela funcao `parsePage`, que:
+O valor de `page` passa pela funcao compartilhada `parsePage`, em `src/utils/parsePage.ts`, que:
 
 - converte o valor para numero
 - garante que o numero seja inteiro
 - impede valores menores que `1`
 
 Se o parametro for invalido, a pagina volta para `1`.
+
+Essa mesma funcao tambem e reutilizada em `src/app/api/products/route.ts`, evitando codigo duplicado entre a pagina e a API.
 
 ## 2. Consumo da rota interna
 
@@ -74,6 +78,7 @@ O retorno final para a pagina e:
 Em `src/app/api/products/route.ts`, a rota:
 
 - le os produtos de `src/db/product.json`
+- reutiliza `parsePage` de `src/utils/parsePage.ts`
 - define `PRODUCTS_PER_PAGE = 6`
 - calcula `totalItems`
 - calcula `totalPages`

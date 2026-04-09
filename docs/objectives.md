@@ -1,6 +1,6 @@
 # Checklist do Desafio
 
-Checklist no estado atual do projeto.
+Checklist atualizado com base no estado atual do projeto.
 
 ## Base do projeto
 
@@ -10,7 +10,7 @@ Checklist no estado atual do projeto.
 - [x] Ajustar `metadata` da aplicacao
 - [x] Remover o conteudo padrao do template inicial
 - [x] Configurar as fontes do projeto
-- [x] Gerar a imagem de banner da página de oferta atráves do gemini 
+- [x] Criar o banner da pagina de ofertas
 
 ## Rota principal
 
@@ -32,6 +32,7 @@ Checklist no estado atual do projeto.
 - [x] Tipar o retorno dos produtos
 - [x] Exibir somente 6 produtos por pagina
 - [x] Separar a camada de acesso em `src/lib/api.ts`
+- [x] Extrair a validacao da pagina para `src/utils/parsePage.ts`
 
 ## Card de produto
 
@@ -60,6 +61,8 @@ Checklist no estado atual do projeto.
 
 - [x] Implementar paginacao de 6 em 6 produtos
 - [x] Implementar lazy loading nas imagens dos cards
+- [ ] Implementar filtro por categoria
+- [ ] Adicionar fallback visual durante carregamento
 
 ## Revisao final
 
@@ -86,3 +89,7 @@ Checklist no estado atual do projeto.
 - [x] Conseguir explicar a estrutura do projeto
 - [x] Conseguir explicar como os dados sao buscados
 - [x] Conseguir explicar paginacao
+
+## Apoio
+
+- [pagination-guide.md](/C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/docs/pagination-guide.md)
