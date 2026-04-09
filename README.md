@@ -89,3 +89,4 @@ npm run start
 Os arquivos `.md` sao a referencia atual da documentacao.
 
 - [objectives.md](/C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/docs/objectives.md)
+- [pagination-guide.md](/C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/docs/pagination-guide.md)
