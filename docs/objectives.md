@@ -61,8 +61,7 @@ Checklist atualizado com base no estado atual do projeto.
 
 - [x] Implementar paginacao de 6 em 6 produtos
 - [x] Implementar lazy loading nas imagens dos cards
-- [ ] Implementar filtro por categoria
-- [ ] Adicionar fallback visual durante carregamento
+- [x] Implementar filtro por categoria
 
 ## Revisao final
 
@@ -88,8 +87,10 @@ Checklist atualizado com base no estado atual do projeto.
 
 - [x] Conseguir explicar a estrutura do projeto
 - [x] Conseguir explicar como os dados sao buscados
+- [x] Conseguir explicar filtros
 - [x] Conseguir explicar paginacao
 
 ## Apoio
 
+- [filter-guide.md](/C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/docs/filter-guide.md)
 - [pagination-guide.md](/C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/docs/pagination-guide.md)

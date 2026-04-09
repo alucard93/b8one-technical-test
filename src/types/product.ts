@@ -1,8 +1,11 @@
-export type ProductCategory =
-  | 'electronics'
-  | 'jewelery'
-  | "men's clothing"
-  | "women's clothing"
+export const PRODUCT_CATEGORIES = [
+  'electronics',
+  'jewelery',
+  "men's clothing",
+  "women's clothing",
+] as const
+
+export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number]
 
 export type ProductRating = {
   rate: number
@@ -43,6 +46,9 @@ export type PaginatedProductsResponse = {
   currentPage: number
   totalPages: number
   totalItems: number
+  availableCategories: ProductCategory[]
+  hasInvalidCategory: boolean
+  selectedCategory: ProductCategory | null
   data: Product[]
 }
 
@@ -50,4 +56,7 @@ export type ProductCardsResult = {
   products: ProductCardData[]
   currentPage: number
   totalPages: number
+  availableCategories: ProductCategory[]
+  hasInvalidCategory: boolean
+  selectedCategory: ProductCategory | null
 }
