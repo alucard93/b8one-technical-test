@@ -1,14 +1,6 @@
-import type {
-  ProductsDb,
-  ProductCardData,
-} from '@/types/product'
-import productsDb from '../../product.json'
+import type { Product, ProductCardData } from '@/types/product'
 
-const PRODUCTS_PER_PAGE = 6
-
-function toProductCardData(
-  product: ProductsDb['products'][number],
-): ProductCardData {
+function toProductCardData(product: Product): ProductCardData {
   return {
     id: String(product.id),
     title: product.title,
@@ -17,8 +9,28 @@ function toProductCardData(
   }
 }
 
-export async function getProductCards(): Promise<ProductCardData[]> {
-  const { products } = productsDb as ProductsDb
+function getBaseUrl() {
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  }
 
-  return products.slice(0, PRODUCTS_PER_PAGE).map(toProductCardData)
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`
+  }
+
+  return `http://localhost:${process.env.PORT ?? '3000'}`
+}
+
+export async function getProductCards(): Promise<ProductCardData[]> {
+  const response = await fetch(`${getBaseUrl()}/api/products`, {
+    cache: 'no-store',
+  })
+
+  if (!response.ok) {
+    throw new Error('Erro ao buscar produtos')
+  }
+
+  const products: Product[] = await response.json()
+
+  return products.map(toProductCardData)
 }
