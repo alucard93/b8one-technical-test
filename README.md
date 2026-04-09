@@ -1,39 +1,54 @@
 # b8one Technical Test
 
-Projeto desenvolvido com `Next.js`, `TypeScript` e `Tailwind CSS`.
+![alt text](image.png)
 
-Os dados da vitrine são mockados localmente a partir do arquivo [product.json](C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/product.json) e expostos internamente pela rota [route.ts](C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/src/app/api/products/route.ts).
+Aplicacao desenvolvida com `Next.js`, `React`, `TypeScript` e `Tailwind CSS`.
+
+O projeto implementa a rota `/ofertas` com:
+
+- banner estatico no topo
+- titulo `Ofertas da Semana`
+- vitrine de produtos
+- paginacao de 6 itens por pagina
+
+Os dados sao mockados localmente em `src/db/product.json` e expostos por uma rota interna `GET /api/products`.
+
+## Stack
+
+- `Next.js 16`
+- `React 19`
+- `TypeScript`
+- `Tailwind CSS 4`
 
 ## Requisitos
 
-- `Node.js`
+- `Node.js 20+`
 - `npm`
 
-## Instalação
+## Instalacao
 
 ```bash
 npm install
 ```
 
-## Como rodar o projeto
+## Como rodar em desenvolvimento
 
 ```bash
 npm run dev
 ```
 
-Aplicação:
+Abra:
 
 - `http://localhost:3000`
-
-Rota do desafio:
-
 - `http://localhost:3000/ofertas`
 
-Rota interna de produtos:
+## Rotas importantes
 
-- `http://localhost:3000/api/products`
+- `/ofertas`: pagina principal do desafio
+- `/api/products`: rota interna com os produtos paginados
+- `/api/products?page=2`: exemplo de segunda pagina
 
-## Scripts disponíveis
+## Scripts disponiveis
 
 ```bash
 npm run dev
@@ -42,8 +57,38 @@ npm run build
 npm run start
 ```
 
-## Estrutura dos dados
+## Build de producao
 
-- [product.json](C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/product.json): base local dos produtos
-- [api.ts](C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/src/lib/api.ts): transformação dos dados para a vitrine
-- [route.ts](C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/src/app/api/products/route.ts): endpoint interno `/api/products`
+```bash
+npm run build
+npm run start
+```
+
+## Estrutura resumida
+
+- `src/app/ofertas/page.tsx`: pagina da vitrine
+- `src/app/api/products/route.ts`: rota interna dos produtos
+- `src/components/HeroBanner.tsx`: banner principal
+- `src/components/ProductGrid.tsx`: grid da vitrine
+- `src/components/ProductCard.tsx`: card do produto
+- `src/components/Pagination.tsx`: controles de paginacao
+- `src/lib/api.ts`: camada de acesso aos dados
+- `src/utils/parsePage.ts`: util compartilhado para validacao da pagina atual
+- `src/db/product.json`: base mockada
+- `src/types/product.ts`: tipagens de dominio
+
+## Fluxo resumido
+
+1. A pagina `/ofertas` le `searchParams.page`.
+2. `src/utils/parsePage.ts` valida o numero da pagina.
+3. `src/lib/api.ts` consome a rota interna `/api/products`.
+4. `src/app/api/products/route.ts` le `src/db/product.json`, reaproveita `parsePage` e aplica a paginacao.
+5. A pagina recebe os produtos prontos para a UI.
+6. `ProductGrid`, `ProductCard` e `Pagination` renderizam a interface.
+
+## Documentacao
+
+Os arquivos `.md` sao a referencia atual da documentacao.
+
+- [objectives.md](/C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/docs/objectives.md)
+- [pagination-guide.md](/C:/Users/Vinicius/Documents/GitHub/b8one-technical-test/docs/pagination-guide.md)

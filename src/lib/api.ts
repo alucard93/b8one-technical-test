@@ -1,4 +1,9 @@
-import type { Product, ProductCardData } from '@/types/product'
+import type {
+  PaginatedProductsResponse,
+  Product,
+  ProductCardData,
+  ProductCardsResult,
+} from '@/types/product'
 
 function toProductCardData(product: Product): ProductCardData {
   return {
@@ -21,8 +26,12 @@ function getBaseUrl() {
   return `http://localhost:${process.env.PORT ?? '3000'}`
 }
 
-export async function getProductCards(): Promise<ProductCardData[]> {
-  const response = await fetch(`${getBaseUrl()}/api/products`, {
+export async function getProductCards(page = 1): Promise<ProductCardsResult> {
+  const searchParams = new URLSearchParams({
+    page: String(page),
+  })
+
+  const response = await fetch(`${getBaseUrl()}/api/products?${searchParams.toString()}`, {
     cache: 'no-store',
   })
 
@@ -30,7 +39,11 @@ export async function getProductCards(): Promise<ProductCardData[]> {
     throw new Error('Erro ao buscar produtos')
   }
 
-  const products: Product[] = await response.json()
+  const result: PaginatedProductsResponse = await response.json()
 
-  return products.map(toProductCardData)
+  return {
+    products: result.data.map(toProductCardData),
+    currentPage: result.currentPage,
+    totalPages: result.totalPages,
+  }
 }
