@@ -9,6 +9,12 @@ type PaginationProps = {
   selectedCategory: ProductCategory | null
 }
 
+const previousNextBaseClassName =
+  'inline-flex h-8 items-center justify-center rounded-lg border border-slate-200 px-2.5 text-[11px] font-medium'
+
+const pageLinkBaseClassName =
+  'inline-flex size-8 items-center justify-center rounded-lg border text-[11px] font-semibold transition-colors'
+
 const Pagination = ({
   currentPage,
   totalPages,
@@ -31,14 +37,14 @@ const Pagination = ({
                 category: selectedCategory,
               })}
               aria-label="Pagina anterior"
-              className="inline-flex h-8 items-center justify-center rounded-lg border border-slate-200 px-2.5 text-[11px] font-medium text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50"
+              className={`${previousNextBaseClassName} text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50`}
             >
               Ant.
             </Link>
           ) : (
             <span
               aria-hidden="true"
-              className="inline-flex h-8 items-center justify-center rounded-lg border border-slate-200 px-2.5 text-[11px] font-medium text-slate-400"
+              className={`${previousNextBaseClassName} text-slate-400`}
             >
               Ant.
             </span>
@@ -53,7 +59,7 @@ const Pagination = ({
                 category: selectedCategory,
               })}
               aria-current={page === currentPage ? 'page' : undefined}
-              className={`inline-flex size-8 items-center justify-center rounded-lg border text-[11px] font-semibold transition-colors ${
+              className={`${pageLinkBaseClassName} ${
                 page === currentPage
                   ? 'border-slate-900 bg-slate-900 text-white'
                   : 'border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'
@@ -72,14 +78,14 @@ const Pagination = ({
                 category: selectedCategory,
               })}
               aria-label="Proxima pagina"
-              className="inline-flex h-8 items-center justify-center rounded-lg border border-slate-200 px-2.5 text-[11px] font-medium text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50"
+              className={`${previousNextBaseClassName} text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50`}
             >
               Prox.
             </Link>
           ) : (
             <span
               aria-hidden="true"
-              className="inline-flex h-8 items-center justify-center rounded-lg border border-slate-200 px-2.5 text-[11px] font-medium text-slate-400"
+              className={`${previousNextBaseClassName} text-slate-400`}
             >
               Prox.
             </span>
