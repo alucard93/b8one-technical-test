@@ -13,7 +13,7 @@ const HeroBanner = () => {
           loading="eager"
           fetchPriority="high"
           placeholder="blur"
-          sizes="(min-width: 1280px) 1280px, (min-width: 768px) 100vw, 100vw"
+          sizes="100vw"
           className="object-cover object-left"
         />
       </div>
