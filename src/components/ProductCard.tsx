@@ -13,15 +13,17 @@ const priceFormatter = new Intl.NumberFormat('pt-BR', {
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm group transition-shadow duration-300 hover:shadow-md">
-      <figure className="relative aspect-square w-full bg-slate-50">
-        <Image
-          src={product.image}
-          alt={product.title}
-          fill
-          loading="lazy"
-          sizes="(max-width: 359px) calc(100vw - 2rem), (min-width: 1280px) 288px, (min-width: 1024px) 23vw, (min-width: 768px) 30vw, (min-width: 640px) 45vw, 320px"
-          className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
-        />
+      <figure className="aspect-square w-full bg-slate-50 p-6">
+        <div className="relative size-full">
+          <Image
+            src={product.image}
+            alt={product.title}
+            fill
+            loading="lazy"
+            sizes="(min-width: 1280px) 242px, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, calc(100vw - 5rem)"
+            className="object-contain transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
       </figure>
 
       <div className="flex flex-col gap-4 p-4">
