@@ -87,7 +87,7 @@ npm run start
 O projeto segue uma organização modular em camadas dentro do próprio `Next.js`:
 
 1. a página `/ofertas` lê `searchParams.page` e `searchParams.category`
-2. `parsePage` valida a página, e a rota interna usa `parseCategory` para interpretar a categoria
+2. `parsePage` valida a página, e a rota interna valida a categoria com base no domínio definido em `src/types/product.ts`
 3. `src/lib/api.ts` consome a rota interna `/api/products`
 4. `src/app/api/products/route.ts` lê o mock local, aplica filtro e paginação
 5. a UI renderiza com `CategoryFilter`, `ProductGrid`, `ProductCard` e `Pagination`
@@ -113,7 +113,6 @@ src/
     product.ts
   utils/
     createOffersHref.ts
-    parseCategory.ts
     parsePage.ts
 ```
 
@@ -129,8 +128,6 @@ Arquivos principais:
   Navegação entre páginas
 - `src/lib/api.ts`
   Camada de acesso aos dados
-- `src/utils/parseCategory.ts`
-  Validação de categoria
 - `src/utils/createOffersHref.ts`
   Montagem compartilhada das URLs
 
