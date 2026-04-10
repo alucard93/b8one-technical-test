@@ -22,7 +22,6 @@ Exemplos:
 - `src/app/api/products/route.ts`
 - `src/lib/api.ts`
 - `src/types/product.ts`
-- `src/utils/parseCategory.ts`
 - `src/utils/createOffersHref.ts`
 - `src/db/product.json`
 
@@ -32,7 +31,7 @@ O filtro segue a mesma arquitetura usada na paginação:
 
 1. a URL guarda o estado atual
 2. a página lê `searchParams.category`
-3. `parseCategory` valida o valor recebido
+3. a rota valida o valor recebido
 4. `api.ts` chama a rota interna com o filtro atual
 5. `/api/products` aplica o filtro nos dados
 6. `CategoryFilter` renderiza os links da interface
@@ -54,15 +53,14 @@ Isso foi escolhido porque:
 
 ## 2. Validação da categoria
 
-Em `src/utils/parseCategory.ts`, a categoria recebida pela URL passa por validação.
+Em `src/app/api/products/route.ts`, a categoria recebida pela URL passa por validação.
 
-A função:
+A rota:
 
-- retorna `null` quando não existe categoria
-- retorna `null` quando o valor não pertence ao domínio
-- retorna uma `ProductCategory` válida quando a categoria existe
-
-Esse retorno isolado não diferencia "sem filtro" de "filtro inválido". Essa distinção acontece na rota, comparando o valor bruto da query string com o resultado de `parseCategory`.
+- detecta se o usuário realmente enviou `category`
+- confere se o valor existe em `PRODUCT_CATEGORIES`
+- define `selectedCategory` apenas quando a categoria é válida
+- marca `hasInvalidCategory` quando houve tentativa de filtro com valor inválido
 
 As categorias aceitas ficam centralizadas em `src/types/product.ts`:
 
@@ -93,10 +91,16 @@ Em `src/app/api/products/route.ts`, a rota:
 O ponto principal agora é este:
 
 ```ts
-const hasInvalidCategory =
-  requestedCategory !== null &&
-  requestedCategory !== '' &&
-  selectedCategory === null
+const hasRequestedCategory =
+  requestedCategory !== null && requestedCategory !== ''
+
+const selectedCategory =
+  hasRequestedCategory &&
+  PRODUCT_CATEGORIES.includes(requestedCategory as ProductCategory)
+    ? (requestedCategory as ProductCategory)
+    : null
+
+const hasInvalidCategory = hasRequestedCategory && selectedCategory === null
 
 const filteredProducts = hasInvalidCategory
   ? []

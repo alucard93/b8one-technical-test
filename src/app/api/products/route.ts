@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server'
 
 import productsDb from '@/db/product.json'
-import type { PaginatedProductsResponse, ProductsDb } from '@/types/product'
-import { parseCategory } from '@/utils/parseCategory'
+import {
+  PRODUCT_CATEGORIES,
+  type PaginatedProductsResponse,
+  type ProductCategory,
+  type ProductsDb,
+} from '@/types/product'
 import { parsePage } from '@/utils/parsePage'
 
 const PRODUCTS_PER_PAGE = 6
@@ -12,11 +16,14 @@ export async function GET(request: Request) {
   const { products, filters } = productsDb as ProductsDb
   const currentPage = parsePage(searchParams.get('page'))
   const requestedCategory = searchParams.get('category')
-  const selectedCategory = parseCategory(requestedCategory)
-  const hasInvalidCategory =
-    requestedCategory !== null &&
-    requestedCategory !== '' &&
-    selectedCategory === null
+  const hasRequestedCategory =
+    requestedCategory !== null && requestedCategory !== ''
+  const selectedCategory =
+    hasRequestedCategory &&
+    PRODUCT_CATEGORIES.includes(requestedCategory as ProductCategory)
+      ? (requestedCategory as ProductCategory)
+      : null
+  const hasInvalidCategory = hasRequestedCategory && selectedCategory === null
   const filteredProducts = hasInvalidCategory
     ? []
     : selectedCategory

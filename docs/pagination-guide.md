@@ -25,7 +25,6 @@ Exemplos:
 - `src/components/Pagination.tsx`
 - `src/types/product.ts`
 - `src/utils/parsePage.ts`
-- `src/utils/parseCategory.ts`
 - `src/utils/createOffersHref.ts`
 - `src/db/product.json`
 
@@ -35,7 +34,7 @@ O fluxo foi dividido em seis partes:
 
 1. a página lê a query string
 2. `parsePage` valida a página
-3. `parseCategory` valida a categoria
+3. a rota valida a categoria
 4. `api.ts` consome a rota interna
 5. a rota interna filtra e pagina os produtos
 6. `CategoryFilter` e `Pagination` renderizam os links
@@ -49,7 +48,7 @@ Em `src/app/ofertas/page.tsx`, a página recebe `searchParams` com:
 
 `page` passa por `src/utils/parsePage.ts`, que garante um inteiro maior ou igual a `1`.
 
-`category` é encaminhada para a rota interna, onde `src/utils/parseCategory.ts` aceita apenas categorias válidas do domínio.
+`category` é encaminhada para a rota interna, onde `src/app/api/products/route.ts` aceita apenas categorias válidas do domínio.
 
 ## 2. Consumo da rota interna
 
@@ -88,7 +87,7 @@ Em `src/app/api/products/route.ts`, a rota:
 
 - lê os produtos de `src/db/product.json`
 - reutiliza `parsePage`
-- reutiliza `parseCategory`
+- valida `category` diretamente com `PRODUCT_CATEGORIES`
 - define `PRODUCTS_PER_PAGE = 6`
 - detecta quando a categoria informada é inválida
 - filtra os produtos por categoria
