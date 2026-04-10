@@ -10,7 +10,7 @@ const HeroBanner = () => {
           src={bannerCategory}
           alt="Banner promocional das ofertas da semana"
           fill
-          preload
+          priority
           placeholder="blur"
           sizes="100vw"
           className="object-cover object-left"
