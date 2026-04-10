@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import bannerCategory from '../../public/banner-category.png'
+import bannerCategory from '../../public/banner-category.webp'
 
 const HeroBanner = () => {
   return (
@@ -10,8 +10,7 @@ const HeroBanner = () => {
           src={bannerCategory}
           alt="Banner promocional das ofertas da semana"
           fill
-          loading="eager"
-          fetchPriority="high"
+          preload
           placeholder="blur"
           sizes="100vw"
           className="object-cover object-left"
