@@ -11,6 +11,7 @@ const HeroBanner = () => {
           alt="Banner promocional das ofertas da semana"
           fill
           priority
+          fetchPriority="high"
           placeholder="blur"
           sizes="100vw"
           className="object-cover object-left"
